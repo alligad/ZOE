@@ -1,3 +1,3 @@
 # ZOE
-https://github.com/alligad/ZOE/zoe.html
+https://alligad.github.io/ZOE/zoe.html
 
