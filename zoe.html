@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liebesnachrichten für Zoe 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #fee9e9, #ffd6e7, #ffecf1, #fff0f3);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative; /* Für das Profilbild */
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .message {
+            font-size: 2.2rem;
+            line-height: 1.5;
+            margin: 2rem 0;
+            color: #ff4d8d;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease-out forwards;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .date {
+            font-size: 1.1rem;
+            color: #ff758f;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .info {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.9rem;
+            color: #ff758f;
+            text-align: right;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .profile {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile img {
+            width: 50px; /* Größe des Profilbilds */
+            height: 50px; /* Größe des Profilbilds */
+            border-radius: 50%; /* Kreisform */
+            border: 2px solid #ff4d8d; /* Rand um das Bild */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Schatten */
+        }
+
+        .profile-text {
+            font-size: 0.8rem;
+            color: #ff4d8d;
+            margin-top: 5px;
+        }
+
+        .timer {
+            font-size: 1.1rem;
+            color: #ff758f;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .message {
+                font-size: 1.8rem;
+            }
+        }
+
+        #spotify-module {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #song-cover {
+            width: 50px; /* Größe des Covers */
+            height: 50px; /* Größe des Covers */
+            border-radius: 5px; /* Abgerundete Ecken */
+            margin-right: 10px;
+        }
+
+        .song-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .song-title {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .song-artist {
+            font-size: 0.8rem;
+            color: #555;
+        }
+
+        .play-button {
+            margin-top: 5px; /* Abstand zum Cover */
+            background: #ff4d8d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        audio {
+            margin-top: 10px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="profile">
+        <img src="pb.png" alt="Profilbild"> <!-- Profilbild hier -->
+        <div class="profile-text">Made by Mo ❤️</div>
+    </div>
+    <div id="spotify-module">
+        <img id="song-cover" src="" alt="Song Cover" />
+        <div class="song-info">
+            <div class="song-title" id="song-title"></div>
+            <div class="song-artist" id="song-artist"></div>
+            <button class="play-button" id="play-button">Play</button>
+        </div>
+    </div>
+    <audio id="audio-player" controls>
+        <source id="audio-source" src="" type="audio/mpeg">
+        Dein Browser unterstützt das Audio-Tag.
+    </audio>
+    <div class="container">
+        <div class="date" id="current-date"></div>
+        <div class="timer" id="day-timer"></div>
+        <div class="message" id="daily-message"></div>
+        <div class="timer" id="next-message-timer"></div>
+    </div>
+    <div class="info">
+        Eine neue Liebesnachricht jeden Tag,<br>
+        nur für dich, Zoe 💖
+    </div>
+
+    <script>
+        const messages = [
+            "Du bist mein Sonnenschein an jedem einzelnen Tag, ich liebe dich ZOE☀️",
+            "Dein Lächeln macht meine Welt so viel schöner, ich liebe dich ZOE 💫",
+            "Mit dir ist jeder Moment etwas Besonderes, ich liebe dich ZOE ✨",
+            "Du bist der liebevollste Mensch, den ich kenne, ich liebe dich ZOE 💝",
+            "Danke, dass es dich gibt, ich liebe dich ZOE 🌸",
+            "Jeder Tag mit dir ist wie ein kleines Wunder, ich liebe dich ZOE 🌈",
+            "Du machst mich zum glücklichsten Menschen der Welt, ich liebe dich ZOE 💖",
+            "In deiner Nähe fühlt sich alles richtig an, ich liebe dich ZOE ✨",
+            "Du bist mein Lieblingsgedanke jeden Tag, ich liebe dich ZOE 💭",
+            "Mit dir wird jeder Moment zu etwas Magischem, ich liebe dich ZOE 🌟",
+            "Du bist die süßeste Cutieee, die ich kenne, ich liebe dich ZOE 🥰",
+            "Mausi, du bist mein Ein und Alles, ich liebe dich ZOE 💕",
+            "Ich bin so dankbar, dich an meiner Seite zu haben, ich liebe dich ZOE 💌",
+            "Ohne dich wäre mein Leben nur halb so schön, ich liebe dich ZOE 🌺",
+            "Du bist einfach wunderschön, innen und außen, ich liebe dich ZOE 🌷",
+            "Für dich würde ich alles tun, meine Süße, ich liebe dich ZOE 💖",
+            "Du machst jede Sekunde so besonders für mich, ich liebe dich ZOE 💎",
+            "Mit dir vergeht die Zeit wie im Flug, ich liebe dich ZOE 🕊️",
+            "Deine Umarmungen fühlen sich wie Zuhause an, ich liebe dich ZOE 🏡",
+            "Du bringst mein Herz jedes Mal zum Strahlen, ich liebe dich ZOE 🌟",
+            "Keiner versteht mich so wie du, Mausi, ich liebe dich ZOE 💕",
+            "Du bist einfach perfekt für mich, Zoe, ich liebe dich ZOE 🌹",
+            "Ohne dich wäre die Welt so viel dunkler, ich liebe dich ZOE 🌌",
+            "Ich könnte dir stundenlang zuhören und nie genug bekommen, ich liebe dich ZOE 🎶",
+            "Du bist meine größte Inspiration jeden Tag, ich liebe dich ZOE 🌈",
+            "Mit dir an meiner Seite fühle ich mich komplett, ich liebe dich ZOE 🌺",
+            "Ich liebe es, wie du mich zum Lachen bringst, ich liebe dich ZOE 😂",
+            "Cutieee, du bist alles, was ich mir je gewünscht habe, ich liebe dich ZOE 💝",
+            "Ich würde die Sterne für dich vom Himmel holen, ich liebe dich ZOE ✨",
+            "Deine Augen sind wie zwei funkelnde Sterne, ich liebe dich ZOE 🌟",
+            "Ich bin so stolz darauf, dich in meinem Leben zu haben, ich liebe dich ZOE 🌸",
+            "Du bist die süßeste und liebevollste Person, die ich kenne, ich liebe dich ZOE 🥰",
+            "Mit dir fühlt sich selbst ein Regentag wie Sonnenschein an, ich liebe dich ZOE 🌦️",
+            "Du bist meine bessere Hälfte, mein Herz, ich liebe dich ZOE 💖",
+            "Zoe, du machst mein Leben so viel schöner, ich liebe dich ZOE 💐",
+            "Alles, was ich will, bist du, Mausi, ich liebe dich ZOE 💌",
+            "Deine Liebe gibt mir so viel Kraft und Hoffnung, ich liebe dich ZOE 🌟",
+            "Jeder Moment mit dir ist ein Geschenk, ich liebe dich ZOE 🎁",
+            "Du bist der Grund, warum ich so glücklich bin, ich liebe dich ZOE 💕",
+            "Ich liebe es, wie du mich ansiehst, ich liebe dich ZOE 🥹",
+            "Du bist das Beste, was mir je passiert ist, ich liebe dich ZOE 🌸",
+            "Ohne dich wäre mein Leben unvorstellbar, ich liebe dich ZOE 🌹",
+            "Du bist meine größte Schwäche und mein größtes Glück, ich liebe dich ZOE 💞",
+            "Mit dir wird jeder Traum wahr, ich liebe dich ZOE 🌟",
+            "Du bist so unfassbar schön, Mausi, ich liebe dich ZOE 😘",
+            "Ich bewundere dich für alles, was du bist und tust, ich liebe dich ZOE 💖",
+            "Du bist mein kleines Wunder, Zoe, ich liebe dich ZOE 🌈",
+            "Für dich würde ich Berge versetzen, ich liebe dich ZOE ⛰️",
+            "Du machst mein Herz schneller schlagen, ich liebe dich ZOE 💓",
+            "Ich liebe es, Zeit mit dir zu verbringen, ich liebe dich ZOE 💌",
+            "Deine Stimme ist Musik in meinen Ohren, ich liebe dich ZOE 🎶",
+            "Mit dir ist das Leben so viel bunter, ich liebe dich ZOE 🌈",
+            "Du bist mein Licht in der Dunkelheit, ich liebe dich ZOE 🌟",
+            "Deine Nähe macht alles gut, ich liebe dich ZOE 🫂",
+            "Ich könnte dich den ganzen Tag anschauen und wäre immer noch fasziniert, ich liebe dich ZOE 😍",
+            "Du bist der Grund, warum ich jeden Morgen aufstehe, ich liebe dich ZOE ☀️",
+            "Ich liebe alles an dir, Zoe, ich liebe dich ZOE 💕",
+            "Mit dir fühlt sich die Welt richtig an, ich liebe dich ZOE 🌍",
+            "Du bist die wichtigste Person in meinem Leben, ich liebe dich ZOE 💝",
+            "Du bist mein kleiner Schatz, Mausi, ich liebe dich ZOE 💖",
+            "Ich würde alles für dein Lächeln tun, ich liebe dich ZOE 🌺",
+            "Du bist mein sicherer Hafen, mein Zuhause, ich liebe dich ZOE 🏡",
+            "Zoe, du bist einfach unglaublich, ich liebe dich ZOE 💫",
+            "Ich kann nicht glauben, wie viel Glück ich mit dir habe, ich liebe dich ZOE 🌟",
+            "Du bist der schönste Mensch, den ich je getroffen habe, ich liebe dich ZOE  💕",
+            "Du bist mein persönliches Märchen, ich liebe dich ZOE 🌹",
+            "Dein Lachen ist das schönste Geräusch, das ich kenne, ich liebe dich ZOE 🎶",
+            "Mit dir ist alles besser, Mausi, ich liebe dich ZOE 🥰",
+            "Ich liebe es, wie du mich ansiehst, ich liebe dich ZOE 🥹",
+            "Du bist mein Lieblingsmensch, immer und ewig, ich liebe dich ZOE 💌",
+            "Ich bin so froh, dass es dich gibt, ich liebe dich ZOE 🌷",
+            "Du bist mein kleiner Engel, ich liebe dich ZOE 😇",
+            "Deine Liebe macht mich so stark, ich liebe dich ZOE 💪",
+            "Ich liebe alles an dir, Mausi, ich liebe dich ZOE 💖",
+            "Du bist mein größter Schatz, ich liebe dich ZOE 💎",
+            "Mit dir ist jeder Tag ein Abenteuer, ich liebe dich ZOE 🌈",
+            "Ich liebe dich mehr, als Worte jemals sagen könnten, ich liebe dich ZOE 💕",
+            "Du bist mein Ruhepol in einer chaotischen Welt, ich liebe dich ZOE 🌊",
+            "Deine Wärme macht alles besser, ich liebe dich ZOE 🥰",
+            "Zoe, du bist meine Zukunft, ich liebe dich ZOE 🌟",
+            "Ich würde für dich bis ans Ende der Welt gehen, ich liebe dich ZOE 🌍",
+            "Du bist der Grund, warum ich immer lächeln muss, ich liebe dich ZOE 😘",
+            "Ich liebe dich von ganzem Herzen, Mausi, ich liebe dich ZOE 💝",
+            "Mit dir ist mein Leben komplett, ich liebe dich ZOE 💕",
+            "Du bist mein größtes Glück, ich liebe dich ZOE 🌟",
+            "Danke, dass du immer für mich da bist, ich liebe dich ZOE 💖",
+            "Du bist mein Ein und Alles, Zoe, ich liebe dich ZOE 🌷",
+            "Ich bin so glücklich, dass du in meinem Leben bist, ich liebe dich ZOE 🌈",
+            "Deine Liebe gibt mir alles, was ich brauche, ich liebe dich ZOE 🥹",
+            "Du bist die wichtigste Person in meinem Leben, ich liebe dich ZOE 💝",
+            "Ich könnte mich jeden Tag in dich neu verlieben, ich liebe dich ZOE 💞",
+            "Du bist das Beste, was mir je passiert ist, ich liebe dich ZOE 💌",
+            "Ich liebe es, wie du mich zum Strahlen bringst, ich liebe dich ZOE 🌟",
+            "Du bist mein kleiner Stern am Himmel, ich liebe dich ZOE 🌠",
+            "Mit dir fühlt sich die Welt so lebendig an, ich liebe dich ZOE 🌍",
+            "Ich liebe die Art, wie du mich ansiehst, ich liebe dich ZOE 🥰",
+            "Du bist mein kleiner Glücksbringer, ich liebe dich ZOE 🍀",
+            "Zoe, du bist der hellste Stern in meinem Universum, ich liebe dich ZOE 🌟",
+            "Dein Lachen ist die schönste Melodie, ich liebe dich ZOE 🎶",
+            "Du bist mein Herz und meine Seele, ich liebe dich ZOE 💕"
+        ];
+
+        // Startdatum für die erste Nachricht (heute um Mitternacht)
+        const startDate = new Date();
+        startDate.setHours(0, 0, 0, 0);
+
+        function updateDate() {
+            const dateElement = document.getElementById('current-date');
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateElement.textContent = new Date().toLocaleDateString('de-DE', options);
+        }
+
+        function getMessageForToday() {
+            const now = new Date();
+            const messageIndex = (now.getFullYear() + now.getMonth() + now.getDate() - 1) % messages.length; // -1 für den ersten Tag
+            return messages[messageIndex];
+        }
+
+        function updateMessage() {
+            const messageElement = document.getElementById('daily-message');
+            const message = getMessageForToday();
+            messageElement.textContent = message; // Zeige die Nachricht immer an
+        }
+
+        function updateDayTimer() {
+            const now = new Date();
+            const firstMessageDate = new Date();
+            firstMessageDate.setHours(0, 0, 0, 0); // Setze auf Mitternacht
+            firstMessageDate.setDate(firstMessageDate.getDate() - 1); // Gestern
+
+            const diffDays = Math.floor((now - firstMessageDate) / (1000 * 60 * 60 * 24));
+            const dayTimerElement = document.getElementById('day-timer');
+            dayTimerElement.textContent = `Tag ${diffDays + 1}: Nachricht ${diffDays + 1}`;
+        }
+
+        function updateNextMessageTimer() {
+            const now = new Date();
+            const nextMessageTime = new Date();
+            nextMessageTime.setHours(24, 0, 0, 0); // Setze auf Mitternacht
+
+            const diff = nextMessageTime - now;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const nextMessageElement = document.getElementById('next-message-timer');
+            nextMessageElement.textContent = `Nächste Nachricht in: ${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function checkNewDay() {
+            const now = new Date();
+            if (now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
+                updateDate();
+                updateMessage();
+            }
+        }
+
+        // Animationen und Timer starten
+        setInterval(updateNextMessageTimer, 1000);
+        setInterval(checkNewDay, 1000);
+
+        // Initial updates
+        updateDate();
+        updateMessage(); // Zeige die erste Nachricht sofort an
+        updateDayTimer(); // Tagestimer aktualisieren
+        updateNextMessageTimer(); // Nächste Nachricht aktualisieren
+
+        const clientId = 'ca30681be74b42a68dcc34c138cdaa08';
+        const clientSecret = '3fabca9150a94f2abf2b007e27426f6c';
+        const playlistId = '4v6y1AD0q6vlawbNjDNCgl';
+
+        async function getSpotifyToken() {
+            const response = await fetch('https://accounts.spotify.com/api/token', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret),
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'grant_type=client_credentials'
+            });
+            const data = await response.json();
+            return data.access_token;
+        }
+
+        async function getPlaylistTracks(playlistId) {
+            const token = await getSpotifyToken();
+            const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+            const data = await response.json();
+            return data.items;
+        }
+
+        async function displaySong() {
+            const tracks = await getPlaylistTracks(playlistId);
+            const today = new Date();
+            const songIndex = today.getDate() % tracks.length; // Wähle einen Song basierend auf dem Tag des Monats
+
+            const track = tracks[songIndex].track;
+            document.getElementById('song-cover').src = track.album.images[0].url; // Cover-Bild
+            document.getElementById('audio-source').src = track.preview_url; // Song-URL (Preview)
+            document.getElementById('audio-player').load(); // Audio-Player aktualisieren
+
+            // Song-Informationen anzeigen
+            document.getElementById('song-title').textContent = track.name; // Titel des Songs
+            document.getElementById('song-artist').textContent = track.artists.map(artist => artist.name).join(', '); // Künstler
+        }
+
+        // Play-Button Funktionalität
+        document.getElementById('play-button').addEventListener('click', function() {
+            const audioPlayer = document.getElementById('audio-player');
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                this.textContent = 'Pause'; // Button-Text ändern
+            } else {
+                audioPlayer.pause();
+                this.textContent = 'Play'; // Button-Text zurücksetzen
+            }
+        });
+
+        // Initialisiere die Anzeige des Songs
+        displaySong();
+    </script>
+</body>
+</html>
