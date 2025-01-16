@@ -93,6 +93,29 @@
             color: #ff4d8d;
             margin-top: 5px;
         }
+        .cute-button {
+            background: #ff4d8d;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+        .cute-button:hover {
+            background: #ff759d;
+            transform: scale(1.05);
+        }
+
+        .cute-button:active {
+            transform: scale(0.95);
+        }
 
         .timer {
             font-size: 1.1rem;
@@ -193,6 +216,8 @@
         <div class="timer" id="day-timer"></div>
         <div class="message" id="daily-message"></div>
         <div class="timer" id="next-message-timer"></div>
+        <a href="https://alligad.github.io/ZOE/timer.html" class="cute-button">Zur Timer-Seite 💖</a>
+
     </div>
     <div class="info">
         Eine neue Liebesnachricht jeden Tag,<br>
