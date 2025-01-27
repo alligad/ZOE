@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Willkommen, Zoe 💖</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
+        /* General Styling */
         * {
             margin: 0;
             padding: 0;
@@ -14,116 +15,155 @@
         }
 
         body {
-            background: linear-gradient(-45deg, #fee9e9, #ffd6e7, #ffecf1, #fff0f3);
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
             background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            animation: backgroundAnimation 20s ease infinite;
             overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .container {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            max-width: 90%;
-            width: 350px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            padding: 3rem;
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Glowing Halo Effect */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.3), transparent 80%);
+            transform: translate(-50%, -50%);
+            animation: haloEffect 5s infinite ease-in-out;
         }
 
         h1 {
-            font-size: 2.5rem;
-            color: #ff4d8d;
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            text-align: center;
+            color: #ff85a1;
+            text-shadow: 0 5px 10px rgba(255, 77, 141, 0.6);
             margin-bottom: 1rem;
-            animation: fadeIn 1.5s ease;
+            animation: fadeIn 2s ease;
         }
 
         .description {
-            font-size: 1.2rem;
-            color: #ff758f;
+            font-size: 1.5rem;
+            color: #ff6f91;
+            text-align: center;
             margin-bottom: 2rem;
-            animation: fadeIn 2s ease;
+            animation: fadeInUp 2.5s ease;
         }
 
         .buttons {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-top: 1.5rem;
+            gap: 1.5rem;
+            animation: fadeInUp 3s ease;
         }
 
         .buttons a {
-            background: #ff4d8d;
+            background: linear-gradient(45deg, #ff6f91, #ffa6c1);
             color: white;
             text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 30px;
+            text-align: center;
+            padding: 15px 25px;
+            border-radius: 50px;
             font-size: 1.2rem;
-            font-weight: 500;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            box-shadow: 0 8px 15px rgba(255, 105, 180, 0.5);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: slideIn 2.5s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .buttons a:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12px 25px rgba(255, 105, 180, 0.8);
         }
 
-        .buttons a:active {
-            transform: scale(0.95);
+        .buttons a::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent 70%);
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.4s ease;
         }
 
-        .floating-shapes {
+        .buttons a:hover::after {
+            transform: scale(2);
+            opacity: 1;
+        }
+
+        /* Particles Floating in the Background */
+        .floating-particles {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
+            z-index: -1;
         }
 
-        .floating-shapes span {
+        .floating-particles span {
             position: absolute;
-            display: block;
-            width: 30px;
-            height: 30px;
-            background: #ff4d8d;
-            opacity: 0.7;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #ff85a1, transparent);
             border-radius: 50%;
-            animation: float 10s infinite ease-in-out;
+            animation: float 8s infinite ease-in-out;
         }
 
-        .floating-shapes span:nth-child(2n) {
-            background: #ffd6e7;
+        .floating-particles span:nth-child(odd) {
+            background: radial-gradient(circle, #ffa6c1, transparent);
+            animation-duration: 12s;
         }
 
-        @keyframes gradient {
+        /* Animations */
+        @keyframes backgroundAnimation {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
+        @keyframes haloEffect {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.3); opacity: 1; }
+        }
+
         @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(10px); }
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0);
-            }
-            50% {
-                transform: translateY(-20px) rotate(180deg);
-            }
-            100% {
-                transform: translateY(0) rotate(360deg);
-            }
+            0% { transform: translateY(0) translateX(0); opacity: 0.8; }
+            50% { transform: translateY(-50px) translateX(20px); opacity: 1; }
+            100% { transform: translateY(0) translateX(0); opacity: 0.8; }
         }
     </style>
 </head>
@@ -133,18 +173,19 @@
         <p class="description">Entdecke jeden Tag neue Überraschungen!</p>
         <div class="buttons">
             <a href="https://alligad.github.io/ZOE/nachrichten.html">Tägliche Botschaften für ZOE</a>
-            <a href="https://alligad.github.io/ZOE/music.html">Musik-Modul für meine</a>
+            <a href="https://alligad.github.io/ZOE/music.html">Musik-Modul</a>
             <a href="https://alligad.github.io/ZOE/timer.html">Tages-Timer</a>
         </div>
     </div>
 
-    <div class="floating-shapes">
-        <!-- Dynamisch generierte Kreise -->
-        <span style="top: 10%; left: 20%; width: 50px; height: 50px;"></span>
-        <span style="top: 50%; left: 10%; width: 70px; height: 70px;"></span>
-        <span style="top: 70%; left: 80%; width: 40px; height: 40px;"></span>
-        <span style="top: 30%; left: 70%; width: 60px; height: 60px;"></span>
-        <span style="top: 80%; left: 40%; width: 35px; height: 35px;"></span>
+    <!-- Floating Particles -->
+    <div class="floating-particles">
+        <span style="top: 10%; left: 20%;"></span>
+        <span style="top: 50%; left: 10%;"></span>
+        <span style="top: 70%; left: 80%;"></span>
+        <span style="top: 30%; left: 70%;"></span>
+        <span style="top: 80%; left: 40%;"></span>
+        <span style="top: 15%; left: 75%;"></span>
     </div>
 </body>
 </html>
