@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tages-Timer ⏳</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #fee9e9, #ffd6e7, #ffecf1, #fff0f3);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #ff4d8d;
+            margin-bottom: 1rem;
+        }
+
+        .timer {
+            font-size: 2rem;
+            color: #ff758f;
+            margin: 1.5rem 0;
+        }
+
+        .description {
+            font-size: 1.2rem;
+            color: #ff758f;
+            margin-bottom: 1rem;
+        }
+
+        .back-button {
+            background: #ff4d8d;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .back-button:hover {
+            transform: scale(1.05);
+        }
+
+        .back-button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tages-Timer</h1>
+        <div class="description">Zeit bis zum nächsten Ereignis:</div>
+        <div class="timer" id="next-event-timer">Lade Timer...</div>
+        <a href="index.html" class="back-button">Zurück zur Startseite</a>
+    </div>
+
+    <script>
+        function updateNextEventTimer() {
+            const now = new Date();
+            const nextEventTime = new Date('2025-01-31T00:00:00');
+
+            const diff = nextEventTime - now;
+            if (diff <= 0) {
+                document.getElementById('next-event-timer').textContent = "Das Ereignis ist jetzt!";
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('next-event-timer').textContent = 
+                `${days} Tage, ${hours} Stunden, ${minutes.toString().padStart(2, '0')} Minuten, ${seconds.toString().padStart(2, '0')} Sekunden`;
+        }
+
+        setInterval(updateNextEventTimer, 1000);
+        updateNextEventTimer();
+    </script>
+</body>
+</html>

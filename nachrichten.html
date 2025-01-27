@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tägliche Botschaften 💌</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #fee9e9, #ffd6e7, #ffecf1, #fff0f3);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #ff4d8d;
+            margin-bottom: 1rem;
+        }
+
+        .message {
+            font-size: 1.8rem;
+            color: #ff758f;
+            margin: 1.5rem 0;
+        }
+
+        .date {
+            font-size: 1rem;
+            color: #ff758f;
+            margin-bottom: 1rem;
+        }
+
+        .back-button {
+            background: #ff4d8d;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .back-button:hover {
+            transform: scale(1.05);
+        }
+
+        .back-button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tägliche Botschaften</h1>
+        <div class="date" id="current-date">Lade Datum...</div>
+        <div class="message" id="daily-message">Lade Nachricht...</div>
+        <a href="index.html" class="back-button">Zurück zur Startseite</a>
+    </div>
+
+    <script>
+        const messages = [
+"Du bist mein Sonnenschein an jedem einzelnen Tag, ich liebe dich ZOE☀️",
+            "Dein Lächeln macht meine Welt so viel schöner, ich liebe dich ZOE 💫",
+            "Mit dir ist jeder Moment etwas Besonderes, ich liebe dich ZOE ✨",
+            "Du bist der liebevollste Mensch, den ich kenne, ich liebe dich ZOE 💝",
+            "Danke, dass es dich gibt, ich liebe dich ZOE 🌸",
+            "Jeder Tag mit dir ist wie ein kleines Wunder, ich liebe dich ZOE 🌈",
+            "Du machst mich zum glücklichsten Menschen der Welt, ich liebe dich ZOE 💖",
+            "In deiner Nähe fühlt sich alles richtig an, ich liebe dich ZOE ✨",
+            "Du bist mein Lieblingsgedanke jeden Tag, ich liebe dich ZOE 💭",
+            "Mit dir wird jeder Moment zu etwas Magischem, ich liebe dich ZOE 🌟",
+            "Du bist die süßeste Cutieee, die ich kenne, ich liebe dich ZOE 🥰",
+            "Mausi, du bist mein Ein und Alles, ich liebe dich ZOE 💕",
+            "Ich bin so dankbar, dich an meiner Seite zu haben, ich liebe dich ZOE 💌",
+            "Ohne dich wäre mein Leben nur halb so schön, ich liebe dich ZOE 🌺",
+            "Du bist einfach wunderschön, innen und außen, ich liebe dich ZOE 🌷",
+            "Für dich würde ich alles tun, meine Süße, ich liebe dich ZOE 💖",
+            "Du machst jede Sekunde so besonders für mich, ich liebe dich ZOE 💎",
+            "Mit dir vergeht die Zeit wie im Flug, ich liebe dich ZOE 🕊️",
+            "Deine Umarmungen fühlen sich wie Zuhause an, ich liebe dich ZOE 🏡",
+            "Du bringst mein Herz jedes Mal zum Strahlen, ich liebe dich ZOE 🌟",
+            "Keiner versteht mich so wie du, Mausi, ich liebe dich ZOE 💕",
+            "Du bist einfach perfekt für mich, Zoe, ich liebe dich ZOE 🌹",
+            "Ohne dich wäre die Welt so viel dunkler, ich liebe dich ZOE 🌌",
+            "Ich könnte dir stundenlang zuhören und nie genug bekommen, ich liebe dich ZOE 🎶",
+            "Du bist meine größte Inspiration jeden Tag, ich liebe dich ZOE 🌈",
+            "Mit dir an meiner Seite fühle ich mich komplett, ich liebe dich ZOE 🌺",
+            "Ich liebe es, wie du mich zum Lachen bringst, ich liebe dich ZOE 😂",
+            "Cutieee, du bist alles, was ich mir je gewünscht habe, ich liebe dich ZOE 💝",
+            "Ich würde die Sterne für dich vom Himmel holen, ich liebe dich ZOE ✨",
+            "Deine Augen sind wie zwei funkelnde Sterne, ich liebe dich ZOE 🌟",
+            "Ich bin so stolz darauf, dich in meinem Leben zu haben, ich liebe dich ZOE 🌸",
+            "Du bist die süßeste und liebevollste Person, die ich kenne, ich liebe dich ZOE 🥰",
+            "Mit dir fühlt sich selbst ein Regentag wie Sonnenschein an, ich liebe dich ZOE 🌦️",
+            "Du bist meine bessere Hälfte, mein Herz, ich liebe dich ZOE 💖",
+            "Zoe, du machst mein Leben so viel schöner, ich liebe dich ZOE 💐",
+            "Alles, was ich will, bist du, Mausi, ich liebe dich ZOE 💌",
+            "Deine Liebe gibt mir so viel Kraft und Hoffnung, ich liebe dich ZOE 🌟",
+            "Jeder Moment mit dir ist ein Geschenk, ich liebe dich ZOE 🎁",
+            "Du bist der Grund, warum ich so glücklich bin, ich liebe dich ZOE 💕",
+            "Ich liebe es, wie du mich ansiehst, ich liebe dich ZOE 🥹",
+            "Du bist das Beste, was mir je passiert ist, ich liebe dich ZOE 🌸",
+            "Ohne dich wäre mein Leben unvorstellbar, ich liebe dich ZOE 🌹",
+            "Du bist meine größte Schwäche und mein größtes Glück, ich liebe dich ZOE 💞",
+            "Mit dir wird jeder Traum wahr, ich liebe dich ZOE 🌟",
+            "Du bist so unfassbar schön, Mausi, ich liebe dich ZOE 😘",
+            "Ich bewundere dich für alles, was du bist und tust, ich liebe dich ZOE 💖",
+            "Du bist mein kleines Wunder, Zoe, ich liebe dich ZOE 🌈",
+            "Für dich würde ich Berge versetzen, ich liebe dich ZOE ⛰️",
+            "Du machst mein Herz schneller schlagen, ich liebe dich ZOE 💓",
+            "Ich liebe es, Zeit mit dir zu verbringen, ich liebe dich ZOE 💌",
+            "Deine Stimme ist Musik in meinen Ohren, ich liebe dich ZOE 🎶",
+            "Mit dir ist das Leben so viel bunter, ich liebe dich ZOE 🌈",
+            "Du bist mein Licht in der Dunkelheit, ich liebe dich ZOE 🌟",
+            "Deine Nähe macht alles gut, ich liebe dich ZOE 🫂",
+            "Ich könnte dich den ganzen Tag anschauen und wäre immer noch fasziniert, ich liebe dich ZOE 😍",
+            "Du bist der Grund, warum ich jeden Morgen aufstehe, ich liebe dich ZOE ☀️",
+            "Ich liebe alles an dir, Zoe, ich liebe dich ZOE 💕",
+            "Mit dir fühlt sich die Welt richtig an, ich liebe dich ZOE 🌍",
+            "Du bist die wichtigste Person in meinem Leben, ich liebe dich ZOE 💝",
+            "Du bist mein kleiner Schatz, Mausi, ich liebe dich ZOE 💖",
+            "Ich würde alles für dein Lächeln tun, ich liebe dich ZOE 🌺",
+            "Du bist mein sicherer Hafen, mein Zuhause, ich liebe dich ZOE 🏡",
+            "Zoe, du bist einfach unglaublich, ich liebe dich ZOE 💫",
+            "Ich kann nicht glauben, wie viel Glück ich mit dir habe, ich liebe dich ZOE 🌟",
+            "Du bist der schönste Mensch, den ich je getroffen habe, ich liebe dich ZOE  💕",
+            "Du bist mein persönliches Märchen, ich liebe dich ZOE 🌹",
+            "Dein Lachen ist das schönste Geräusch, das ich kenne, ich liebe dich ZOE 🎶",
+            "Mit dir ist alles besser, Mausi, ich liebe dich ZOE 🥰",
+            "Ich liebe es, wie du mich ansiehst, ich liebe dich ZOE 🥹",
+            "Du bist mein Lieblingsmensch, immer und ewig, ich liebe dich ZOE 💌",
+            "Ich bin so froh, dass es dich gibt, ich liebe dich ZOE 🌷",
+            "Du bist mein kleiner Engel, ich liebe dich ZOE 😇",
+            "Deine Liebe macht mich so stark, ich liebe dich ZOE 💪",
+            "Ich liebe alles an dir, Mausi, ich liebe dich ZOE 💖",
+            "Du bist mein größter Schatz, ich liebe dich ZOE 💎",
+            "Mit dir ist jeder Tag ein Abenteuer, ich liebe dich ZOE 🌈",
+            "Ich liebe dich mehr, als Worte jemals sagen könnten, ich liebe dich ZOE 💕",
+            "Du bist mein Ruhepol in einer chaotischen Welt, ich liebe dich ZOE 🌊",
+            "Deine Wärme macht alles besser, ich liebe dich ZOE 🥰",
+            "Zoe, du bist meine Zukunft, ich liebe dich ZOE 🌟",
+            "Ich würde für dich bis ans Ende der Welt gehen, ich liebe dich ZOE 🌍",
+            "Du bist der Grund, warum ich immer lächeln muss, ich liebe dich ZOE 😘",
+            "Ich liebe dich von ganzem Herzen, Mausi, ich liebe dich ZOE 💝",
+            "Mit dir ist mein Leben komplett, ich liebe dich ZOE 💕",
+            "Du bist mein größtes Glück, ich liebe dich ZOE 🌟",
+            "Danke, dass du immer für mich da bist, ich liebe dich ZOE 💖",
+            "Du bist mein Ein und Alles, Zoe, ich liebe dich ZOE 🌷",
+            "Ich bin so glücklich, dass du in meinem Leben bist, ich liebe dich ZOE 🌈",
+            "Deine Liebe gibt mir alles, was ich brauche, ich liebe dich ZOE 🥹",
+            "Du bist die wichtigste Person in meinem Leben, ich liebe dich ZOE 💝",
+            "Ich könnte mich jeden Tag in dich neu verlieben, ich liebe dich ZOE 💞",
+            "Du bist das Beste, was mir je passiert ist, ich liebe dich ZOE 💌",
+            "Ich liebe es, wie du mich zum Strahlen bringst, ich liebe dich ZOE 🌟",
+            "Du bist mein kleiner Stern am Himmel, ich liebe dich ZOE 🌠",
+            "Mit dir fühlt sich die Welt so lebendig an, ich liebe dich ZOE 🌍",
+            "Ich liebe die Art, wie du mich ansiehst, ich liebe dich ZOE 🥰",
+            "Du bist mein kleiner Glücksbringer, ich liebe dich ZOE 🍀",
+            "Zoe, du bist der hellste Stern in meinem Universum, ich liebe dich ZOE 🌟",
+            "Dein Lachen ist die schönste Melodie, ich liebe dich ZOE 🎶",
+            "Du bist mein Herz und meine Seele, ich liebe dich ZOE 💕"
+        ];
+
+        function updateDateAndMessage() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('de-DE', options);
+
+            const messageIndex = now.getDate() % messages.length;
+            document.getElementById('daily-message').textContent = messages[messageIndex];
+        }
+
+        updateDateAndMessage();
+    </script>
+</body>
+</html>
